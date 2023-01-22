@@ -7,19 +7,36 @@ from rest_framework.views import APIView
 from .models import Women
 from .serializer import WomenSerializer
 
+class WomenApiList(generics.ListCreateAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer
 
-class WomenApiView(APIView):
-    def get(self, request):
-        content = Women.objects.all().values()
-        return Response({'title': list(content)})
 
-    def post(self, request):
-        post_new = Women.objects.create(
-            title=request.data['title'],
-            cat_id=request.data['cat_id'],
-        )
-        print(model_to_dict(post_new))
-        return Response({'title': model_to_dict(post_new)})
-# class WomenApiView(generics.ListAPIView):
-#     queryset = Women.objects.all()
-#     serializer_class = WomenSerializer
+# class WomenApiView(APIView):
+#     def get(self, request):
+#         content = Women.objects.all()
+#         return Response({'title': WomenSerializer(content, many=True).data})
+#
+#     def post(self, request):
+#         serializer = WomenSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#
+#         return Response({'title': serializer.data})
+#
+#     def put(self, request, *args, **kwargs):
+#         pk = kwargs.get('pk', None)
+#         if not pk:
+#             return Response("no such post")
+#
+#         try:
+#             post = Women.objects.get(pk=pk)
+#         except:
+#             return Response("no such post")
+#
+#         serializer = WomenSerializer(data=request.data, instance=post)
+#         serializer.is_valid(raise_exception=True)
+#         # метод save автом вызывает методы из сериализатора в зависимости от кол-ва аргументов
+#         serializer.save()
+#         return Response({'post': serializer.data})
+#
