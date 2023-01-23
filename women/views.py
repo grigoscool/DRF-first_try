@@ -1,16 +1,29 @@
 from django.forms import model_to_dict
 from django.shortcuts import render
 from rest_framework import generics, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Women
+from .models import Women, Category
 from .serializer import WomenSerializer
 
 
 class WomenViewSet(viewsets.ModelViewSet):
-    queryset = Women.objects.all()
     serializer_class = WomenSerializer
+
+    # переопределяет queryset
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        if not pk:
+            return Women.objects.all()[:3]
+        return Women.objects.filter(pk=pk)
+
+    # добаляет нестандартный url к списку url из viewset
+    @action(methods=['post', 'get'], detail=True)
+    def category(self, request, pk):
+        cats = Category.objects.get(pk=pk)
+        return Response({'cats': cats.name})
 
 # class WomenApiList(generics.ListCreateAPIView):
 #     queryset = Women.objects.all()
