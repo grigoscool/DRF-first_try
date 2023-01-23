@@ -17,6 +17,10 @@ class WomenApiUpdate(generics.UpdateAPIView):
     queryset = Women.objects.all()
     serializer_class = WomenSerializer
 
+
+class WomenApiDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer
 # class WomenApiView(APIView):
 #     def get(self, request):
 #         content = Women.objects.all()
