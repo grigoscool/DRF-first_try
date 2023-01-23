@@ -6,13 +6,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Women, Category
-from .permissions import IsAdminOrReadOnly
+from .permissions import IsAdminOrReadOnly, IsAutorOrReadOnly
 from .serializer import WomenSerializer
 
 
 class WomenViewSet(viewsets.ModelViewSet):
     serializer_class = WomenSerializer
-    permission_classes = (IsAdminOrReadOnly, )
+    permission_classes = (IsAdminOrReadOnly, IsAutorOrReadOnly )
     queryset = Women.objects.all()
 
     # переопределяет queryset
