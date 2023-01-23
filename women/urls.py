@@ -5,7 +5,7 @@ from .views import WomenViewSet
 
 router = routers.SimpleRouter()
 router.register(r'women', WomenViewSet, basename='women')
-
+print(router.urls)
 urlpatterns = [
     path('api/v1/', include(router.urls)),
 
