@@ -12,7 +12,7 @@ from .serializer import WomenSerializer
 
 class WomenViewSet(viewsets.ModelViewSet):
     serializer_class = WomenSerializer
-    permission_classes = (IsAdminOrReadOnly, IsAutorOrReadOnly )
+    permission_classes = (IsAdminOrReadOnly, IsAutorOrReadOnly, )
     queryset = Women.objects.all()
 
     # переопределяет queryset
